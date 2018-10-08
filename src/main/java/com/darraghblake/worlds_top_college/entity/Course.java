@@ -1,4 +1,4 @@
-package com.darraghblake.worlds_best_college.entity;
+package com.darraghblake.worlds_top_college.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

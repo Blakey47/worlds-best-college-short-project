@@ -1,4 +1,4 @@
-package com.darraghblake.worlds_best_college;
+package com.darraghblake.worlds_top_college;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
