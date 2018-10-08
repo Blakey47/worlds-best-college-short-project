@@ -1,1 +1,1 @@
-# worlds-best-college-short-project
+# World's Best College Short Project
