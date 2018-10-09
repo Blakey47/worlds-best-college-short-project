@@ -1,5 +1,9 @@
 package com.darraghblake.worlds_top_college.app;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -24,9 +28,12 @@ public class CreateInstructorDemo {
 		Session session = factory.getCurrentSession();
 
 		try {
-			Instructor tempInstructor = new Instructor("George", "Foreman", "Goergy@gmail.com");
+			String firstName = randomFirstName();
+			String lastName = randomLastName();
 			
-			InstructorDetail tempInstructorDetail = new InstructorDetail("www.george.com", "Coding");
+			Instructor tempInstructor = new Instructor(firstName, lastName, lastName + firstName +"@gmail.com");
+			
+			InstructorDetail tempInstructorDetail = new InstructorDetail("www." + firstName + lastName + ".com", randomHobby());
 			
 			tempInstructor.setInstructorDetail(tempInstructorDetail);
 			
@@ -43,6 +50,45 @@ public class CreateInstructorDemo {
 			session.close();
 			factory.close();
 		}
+	}
+	
+	public static String randomFirstName() {
+		List<String> names = new ArrayList<String>();
+		names.add("Sarah");
+		names.add("John");
+		names.add("Michael");
+		names.add("Megan");
+		names.add("Patrick");
+		names.add("Jade");
+		names.add("Rachel");
+		Random random = new Random();
+		return names.get(random.nextInt(names.size() - 1));
+	}
+	
+	public static String randomLastName() {
+		List<String> names = new ArrayList<String>();
+		names.add("Moreen");
+		names.add("Blake");
+		names.add("Hill");
+		names.add("O' Shea");
+		names.add("Leroy");
+		names.add("Farrage");
+		names.add("Gregore");
+		Random random = new Random();
+		return names.get(random.nextInt(names.size() - 1));
+	}
+	
+	public static String randomHobby() {
+		List<String> hobbies = new ArrayList<String>();
+		hobbies.add("Skiing");
+		hobbies.add("Reading");
+		hobbies.add("Coding");
+		hobbies.add("Sailing");
+		hobbies.add("Teaching");
+		hobbies.add("Surfing");
+		hobbies.add("Sleeping");
+		Random random = new Random();
+		return hobbies.get(random.nextInt(hobbies.size() - 1));
 	}
 
 }
