@@ -11,8 +11,9 @@ import org.hibernate.cfg.Configuration;
 import com.darraghblake.worlds_top_college.entity.Course;
 import com.darraghblake.worlds_top_college.entity.Instructor;
 import com.darraghblake.worlds_top_college.entity.InstructorDetail;
+import com.darraghblake.worlds_top_college.entity.Review;
 
-public class CreateCoursesDemo {
+public class CreateCoursesAndReviewDemo {
 
 	public static void main(String[] args) {
 		
@@ -22,6 +23,7 @@ public class CreateCoursesDemo {
 								.addAnnotatedClass(Instructor.class)
 								.addAnnotatedClass(InstructorDetail.class)
 								.addAnnotatedClass(Course.class)
+								.addAnnotatedClass(Review.class)
 								.buildSessionFactory();
 		
 		System.out.println("\n\nCreation Session...\n\n");
@@ -32,11 +34,19 @@ public class CreateCoursesDemo {
 			session.beginTransaction();
 			
 			// Get a selected Instructor
-			int theId = 1;
+			int theId = 2;
 			Instructor tempInstructor = session.get(Instructor.class, theId);
 			
 			Course courseOne = new Course(randomCourseOne(), tempInstructor);
 			Course courseTwo = new Course(randomCourseTwo(), tempInstructor);
+			
+			courseOne.addReview(new Review(randomGoodReview()));
+			courseOne.addReview(new Review(randomGoodReview()));
+			courseOne.addReview(new Review(randomBadReview()));
+			
+			courseTwo.addReview(new Review(randomBadReview()));
+			courseTwo.addReview(new Review(randomGoodReview()));
+			courseTwo.addReview(new Review(randomBadReview()));
 			
 			session.save(courseOne);
 			session.save(courseTwo);
@@ -73,6 +83,28 @@ public class CreateCoursesDemo {
 		course.add("Religion");
 		Random random = new Random();
 		return course.get(random.nextInt(course.size() - 1));
+	}
+	
+	public static String randomGoodReview() {
+		List<String> review = new ArrayList<String>();
+		review.add("Absolutely fantastic!");
+		review.add("Loved every minute of it.");
+		review.add("Never Skipped a Class!! :o");
+		review.add("The Best Class.");
+		review.add("The Best Teacher!");
+		Random random = new Random();
+		return review.get(random.nextInt(review.size() - 1));
+	}
+	
+	public static String randomBadReview() {
+		List<String> review = new ArrayList<String>();
+		review.add("AAwful!!!");
+		review.add("The worst class..... yawn!");
+		review.add("Skipped so much! So Bad!");
+		review.add("Wasn't even worth the credits!");
+		review.add("Ain't never going back.");
+		Random random = new Random();
+		return review.get(random.nextInt(review.size() - 1));
 	}
 
 }
