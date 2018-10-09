@@ -7,6 +7,7 @@ import org.hibernate.cfg.Configuration;
 import com.darraghblake.worlds_top_college.entity.Course;
 import com.darraghblake.worlds_top_college.entity.Instructor;
 import com.darraghblake.worlds_top_college.entity.InstructorDetail;
+import com.darraghblake.worlds_top_college.entity.Review;
 
 public class GetInstructorCoursesDemo {
 
@@ -18,6 +19,7 @@ public class GetInstructorCoursesDemo {
 								.addAnnotatedClass(Instructor.class)
 								.addAnnotatedClass(InstructorDetail.class)
 								.addAnnotatedClass(Course.class)
+								.addAnnotatedClass(Review.class)
 								.buildSessionFactory();
 		
 		System.out.println("\n\nCreation Session...\n\n");
@@ -28,16 +30,26 @@ public class GetInstructorCoursesDemo {
 			session.beginTransaction();
 			
 			// Get a selected Instructor
-			int theId = 1;
+			int theId = 2;
 			Instructor tempInstructor = session.get(Instructor.class, theId);
 			
-			System.out.println("Instructor: " + tempInstructor);
+			String instructorName = tempInstructor.getFirstName() + " " + tempInstructor.getLastName();
 			
-			System.out.println("Courses: " + tempInstructor.getCourses());
+			String courseInformation = "\n\n" + instructorName + "\nCourses:";
+			for (Course course : tempInstructor.getCourses()) {
+				courseInformation += "\n\n" + course.getTitle() + "\nReviews:\n";
+				System.out.println(course);
+				for (Review review : course.getReviews()) {
+					courseInformation += "\n'" + review.getComment() + "'";
+					System.out.println(review);
+				}
+			}
+			
+			System.out.println(courseInformation);
 			
 			session.getTransaction().commit();
 			
-			System.out.println("Complete.");
+			System.out.println("\nComplete.");
 		}
 		finally {
 			session.close();
