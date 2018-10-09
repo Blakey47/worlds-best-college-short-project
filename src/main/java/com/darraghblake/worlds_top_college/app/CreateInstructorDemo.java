@@ -44,7 +44,7 @@ public class CreateInstructorDemo {
 			
 			session.getTransaction().commit();
 			
-			System.out.println("Complete.");
+			System.out.println("\nComplete.\n");
 		}
 		finally {
 			session.close();
