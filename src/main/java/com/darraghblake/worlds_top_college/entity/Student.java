@@ -3,8 +3,10 @@ package com.darraghblake.worlds_top_college.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +33,9 @@ public class Student {
 	@Column(name="email")
 	private String email;
 	
-	@ManyToMany
+	@ManyToMany(
+			fetch=FetchType.LAZY,
+			cascade= {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
 	@JoinTable(
 			name="course_student",
 			joinColumns=@JoinColumn(name="student_id"),
